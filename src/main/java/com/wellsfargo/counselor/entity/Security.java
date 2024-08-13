@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Security {
@@ -12,6 +13,9 @@ public class Security {
     @Id
     @GeneratedValue()
     private long securityId;
+
+    @ManyToOne
+    private Portfolio portfolio;
 
     @Column(nullable = false)
     private String name;
@@ -26,13 +30,14 @@ public class Security {
     private String purchasePrice;
 
     @Column(nullable = false)
-    private String quantity;
+    private float quantity;
 
     protected Security() {
 
     }
 
-    public Security(String name, String category, String purchaseDate, String purchasePrice, String quantity) {
+    public Security(Portfolio portfolio, String name, String category, String purchaseDate, String purchasePrice, float quantity) {
+        this.portfolio = portfolio;
         this.name = name;
         this.category = category;
         this.purchaseDate = purchaseDate;
@@ -42,6 +47,14 @@ public class Security {
 
     public Long getSecurityId() {
         return securityId;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     public String getName() {
@@ -76,11 +89,11 @@ public class Security {
         this.purchasePrice = purchasePrice;
     }
 
-    public String getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 }
